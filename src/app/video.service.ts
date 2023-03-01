@@ -11,13 +11,13 @@ export class VideoService {
   private historyUrl = this.apiUrl + '/history';
   private bookmarksUrl = this.apiUrl + '/bookmarks';
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders().set('content-type', 'application/json'),
   };
   currentVideo: Video | undefined;
   constructor(private http: HttpClient) {}
 
-  getCurrentVideo(): Observable<Video> | undefined {
-    return this.currentVideo ? of(this.currentVideo) : undefined;
+  getCurrentVideo(): Observable<Video | undefined> {
+    return this.currentVideo ? of(this.currentVideo) : of(undefined);
   }
   getHistory(): Observable<Video[]> {
     return this.http.get<Video[]>(this.historyUrl).pipe(
@@ -32,9 +32,10 @@ export class VideoService {
     );
   }
   addHistory(video: Video): Observable<Video> {
+    console.log('addHistory', video);
     return this.http.post<Video>(this.historyUrl, video, this.httpOptions).pipe(
       tap((newVideo: Video) => {
-        console.log(`added video ${newVideo.name} to history}`);
+        console.log(`added video ${newVideo.name} to history`);
         this.currentVideo = newVideo;
       }),
       catchError(this.handleError<Video>('addHistory'))
@@ -44,7 +45,7 @@ export class VideoService {
     return this.http
       .post<Video>(this.bookmarksUrl, video, this.httpOptions)
       .pipe(
-        tap((_) => console.log(`added video ${video.name} to bookmarks}`)),
+        tap((_) => console.log(`added video ${video.name} to bookmarks`)),
         catchError(this.handleError<Video>('addBookmarks'))
       );
   }

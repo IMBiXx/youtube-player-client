@@ -10,10 +10,12 @@ export class SearchbarComponent {
   constructor(private videoService: VideoService) {}
   search(link: string): void {
     console.log(link);
-    this.videoService.addHistory({
-      name: link,
-      url: this.transformUrlToEmbedUrl(link),
-    });
+    this.videoService
+      .addHistory({
+        name: link,
+        url: this.transformUrlToEmbedUrl(link),
+      })
+      .subscribe();
   }
   transformUrlToEmbedUrl(url: string): string {
     const embedUrl = url.replace('watch?v=', 'embed/');
