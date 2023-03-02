@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  background-color: #0f0f0f;
+  color: #f1f1f1;
+  font-family: Helvetica, sans-serif;
+}
+
+a {
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
+  padding: 0.5rem;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

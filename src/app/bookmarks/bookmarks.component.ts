@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Video } from '../video';
 import { VideoService } from '../video.service';
 
@@ -9,21 +10,22 @@ import { VideoService } from '../video.service';
 })
 export class BookmarksComponent {
   bookmarks: Video[] = [];
-  constructor(private videoService: VideoService) {}
-  ngOnInit(): void {
-    this.getBookmarks();
-  }
-  getBookmarks(): void {
-    this.videoService
-      .getBookmarks()
-      .subscribe((bookmarks) => (this.bookmarks = bookmarks));
-  }
-  add(video: Video): void {
-    if (!video) {
-      return;
-    }
-    this.videoService.addBookmarks(video).subscribe((video) => {
-      this.bookmarks.push(video);
+  subscription: Subscription;
+  showBookmarks = false;
+  constructor(private videoService: VideoService) {
+    this.subscription = this.videoService.getBookmarks().subscribe({
+      next: (bookmarks) => {
+        this.bookmarks = bookmarks;
+      },
+      error: (error) => {
+        console.error('error', error);
+      },
     });
+  }
+  playVideo(video: Video): void {
+    this.videoService.addHistory(video).subscribe();
+  }
+  showBookmarksList(): void {
+    this.showBookmarks = !this.showBookmarks;
   }
 }

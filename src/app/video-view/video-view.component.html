@@ -1,13 +1,14 @@
-<div>
-  <h2>Video player</h2>
-  <iframe
-    *ngIf="currentVideo"
-    width="560"
-    height="315"
-    src="{{ currentVideo.url }}"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-  ></iframe>
+<div id="video-view">
+  <div id="video-player" *ngIf="currentVideo && currentVideo.url">
+    <iframe
+      width="800"
+      height="450"
+      [src]="safeURL"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+    <button (click)="addToBookmarks(currentVideo)">Add to Bookmarks</button>
+  </div>
 </div>

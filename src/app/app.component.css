@@ -1,0 +1,8 @@
+#main-view {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+app-video-view {
+  min-width: 800px;
+}

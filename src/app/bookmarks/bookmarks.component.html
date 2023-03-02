@@ -1,6 +1,11 @@
 <h2>Bookmarks</h2>
-<ul>
-  <li *ngFor="let video of bookmarks">
-    {{ video.name }}
+<button (click)="showBookmarksList()">
+  Show Bookmarks ({{ bookmarks.length }})
+</button>
+<ul *ngIf="showBookmarks">
+  <li *ngFor="let video of bookmarks.reverse()">
+    <a (click)="playVideo(video)">
+      {{ video.name }}
+    </a>
   </li>
 </ul>

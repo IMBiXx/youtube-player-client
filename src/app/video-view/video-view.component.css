@@ -1,0 +1,12 @@
+#video-view {
+  display: flex;
+  justify-content: center;
+  min-height: 450px;
+  flex: 1;
+}
+
+#video-player {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}

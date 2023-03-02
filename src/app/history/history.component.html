@@ -1,6 +1,8 @@
 <h2>History</h2>
-<ul>
-  <li *ngFor="let video of history">
-    {{ video.name }}
+<ul id="history-view">
+  <li *ngFor="let video of history.reverse()">
+    <a (click)="playVideo(video)">
+      {{ video.name }}
+    </a>
   </li>
 </ul>

@@ -9,16 +9,25 @@ import { VideoService } from '../video.service';
 export class SearchbarComponent {
   constructor(private videoService: VideoService) {}
   search(link: string): void {
-    console.log(link);
-    this.videoService
-      .addHistory({
-        name: link,
-        url: this.transformUrlToEmbedUrl(link),
-      })
-      .subscribe();
+    // check if link is a valid youtube link
+    const url = this.transformUrlToEmbedUrl(link);
+    if (url) {
+      this.videoService
+        .addHistory({
+          name: link,
+          url: this.transformUrlToEmbedUrl(link),
+        })
+        .subscribe();
+    }
   }
   transformUrlToEmbedUrl(url: string): string {
+    // regex to check if url is a valid youtube link
+    const urlRegex = /youtube\.com\/watch/;
+    if (!urlRegex.test(url)) {
+      return '';
+    }
     const embedUrl = url.replace('watch?v=', 'embed/');
-    return embedUrl;
+    const embedUrlWithoutArgs = embedUrl.match(/(.*)&.*/)?.[1] || embedUrl;
+    return embedUrlWithoutArgs;
   }
 }
